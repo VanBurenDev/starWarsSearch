@@ -27,9 +27,7 @@ class App extends React.Component {
     })
     .then(response => response.json())
     .then((result) => {
-      let namesArray = this.state.names
-      namesArray = result.results.map(item => namesArray.push(item))
-      this.setState({names: namesArray})
+      this.setState({names: result.results})
     })
   }
 

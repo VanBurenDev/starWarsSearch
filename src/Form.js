@@ -6,17 +6,20 @@ export default function Form(props) {
     <form 
       onSubmit = { props.handleNameSubmit}
     >
-      <label htmlFor='characterName'>
-        Enter query
-      </label>
+      <fieldset>
+        <label htmlFor='characterName'>
+          Enter query
+        </label>
 
-      <input 
-        name='characterName' 
-        id='characterName'
-        onChange={props.handleUpdateNameField}
-      ></input>
-      <button type='submit'>Enter</button>
-      <Selector handleUpdateSelector={props.handleUpdateSelector}/>
+        <input 
+          name='characterName' 
+          id='characterName'
+          onChange={props.handleUpdateNameField}
+        ></input>
+        <Selector handleUpdateSelector={props.handleUpdateSelector}/>
+        <button type='submit'>Enter</button>
+        
+      </fieldset>
     </form>
   )
 }

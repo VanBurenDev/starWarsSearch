@@ -9,7 +9,7 @@ export default function Selector(props) {
         onChange={props.handleUpdateSelector}
       >
         <option value='people'>people</option>
-        <option value='spaceships'>spaceships</option>
+        <option value='starships'>starships</option>
         <option value='vehicles'>vehicles</option>
         <option value='planets'>planets</option>
         <option value='films'>films</option>
