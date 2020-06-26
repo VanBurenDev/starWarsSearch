@@ -1,26 +1,68 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Header from './Header'
+import Form from './Form'
+import Section from './Section'
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  
+  state = {
+    names: [],
+    nameField: {
+      value:'',
+      touched:false
+    },
+    selector: {
+      value: 'people',
+      touched:false
+    }
+  }
+
+  handleNameSubmit = (e) => {
+    e.preventDefault()
+    const name = this.state.nameField.value
+    const selection = this.state.selector.value
+    fetch(`https://swapi-thinkful.herokuapp.com/api/${selection}/?search=${name}`,{
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then((result) => {
+      let namesArray = this.state.names
+      namesArray = result.results.map(item => namesArray.push(item))
+      this.setState({names: namesArray})
+    })
+  }
+
+  handleUpdateNameField = (e) => {
+    let newNameField = this.state.nameField
+    newNameField.value = e.target.value
+    newNameField.touched = true
+    this.setState({nameField: newNameField});
+  }
+
+  handleUpdateSelector = (e) => {
+    console.log('selector selected')
+    let newSelector = this.state.selector
+    newSelector.value = e.target.value
+    newSelector.touched = true
+    this.setState({selector: newSelector})
+  }
+
+  render () {
+    return (
+      <div className="App">
+        <Header />
+        <main>
+          <Form 
+            handleNameSubmit = { e => this.handleNameSubmit(e) }
+            handleUpdateNameField = { e => this.handleUpdateNameField(e) }
+            handleUpdateSelector = {e => this.handleUpdateSelector(e)}
+          />
+          <Section results =  {this.state.names } />
+        </main>
+      </div>
+    )
+  }
 }
 
 export default App;
